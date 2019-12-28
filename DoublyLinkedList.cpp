@@ -4,12 +4,13 @@ template <class T>
 class Node
 {
 	public:
+		int key;
 		T data;
 		Node<T> *next; 
 		// singly linked list does not have a `previous` pointer but doubly linked list does
 		Node<T> *previous;
 
-		Node(T newData) { data = newData; }
+		Node(int newKey, T newData) { data = newData; key = newKey;}
 };
 
 template <class T>
@@ -19,9 +20,9 @@ class LinkedList
 		Node<T> *head; 
 		Node<T> *tail;
 
-		void insert(T newData)
+		void insert(int newKey, T newData)
 		{
-			Node<T>* newNode = new Node<T>(newData);
+			Node<T>* newNode = new Node<T>(newKey, newData);
 			if (head == nullptr)
 			{
 				head = newNode;
@@ -59,15 +60,25 @@ class LinkedList
 
 int main() {
 	LinkedList<int> *intlist = new LinkedList<int>();
+	LinkedList<char> *charlist = new LinkedList<char>();
 
-	intlist->insert(5);
-	intlist->insert(2);
-	intlist->insert(33);
-	intlist->insert(991);
-	intlist->insert(3);
+	charlist->insert(0, 'c');
+	charlist->insert(1, 'z');
+	charlist->insert(2, 'a');
+	charlist->insert(3, 'r');
+
+	intlist->insert(5, 5);
+	intlist->insert(2, 2);
+	intlist->insert(33, 33);
+	intlist->insert(991, 991);
+	intlist->insert(3, 3);
 
 	intlist->display();
 	std::cout << "\n";
 	intlist->reverse();
+	std::cout << "\n";
+	charlist->display();
+	std::cout << "\n";
+	charlist->reverse();
 	return 0;
 }
