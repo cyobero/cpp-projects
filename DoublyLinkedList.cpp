@@ -1,35 +1,73 @@
 #include <iostream>
 
-class Node {
+template <class T>
+class Node
+{
 	public:
-	 	int data;	
-		Node* pNext = nullptr; 
-		Node* pPrevious = nullptr;
-	 	Node() {};
-		Node(int dta) { data = dta; }	
-		~Node() {};
-		void displayNode() { std::cout << data << " "; }
+		T data;
+		Node<T> *next; 
+		// singly linked list does not have a `previous` pointer but doubly linked list does
+		Node<T> *previous;
+
+		Node(T newData) { data = newData; }
 };
 
-class DoublyLinkedList {
+template <class T>
+class LinkedList
+{
 	public:
-		DoublyLinkedList() {
-			Node* pFirst = nullptr;
-			Node* pLast = nullptr;	
+		Node<T> *head; 
+		Node<T> *tail;
+
+		void insert(T newData)
+		{
+			Node<T>* newNode = new Node<T>(newData);
+			if (head == nullptr)
+			{
+				head = newNode;
+				tail = head;
+			} else
+			{
+				newNode->previous = tail;
+				tail->next = newNode;
+				tail = newNode;
+			}
 		}
 
-		~DoublyLinkedList() {};
-		void insertFirst(int data); 
-		void insertLast(int data); 
-		int deleteFirst(); 
-	private:
-		Node* pFirst = nullptr;
-		Node* pLast = nullptr;	
+		void display()
+		{
+			Node<T> *ptr;
+			ptr = head;
+			while (ptr != nullptr)
+			{
+				std::cout << ptr->data << " ";
+				ptr = ptr->next;
+			}
+		}
 
-		bool isEmpty() { return (pFirst==nullptr); }
+		void reverse()
+		{
+			Node<T> *ptr;
+			ptr = tail;
+			while (ptr != nullptr)
+			{
+				std::cout << ptr->data << " ";
+				ptr = ptr->previous;
+			}
+		}
 };
 
-void DoublyLinkedList::insertFirst(int data) {
-	*Node newNode;
+int main() {
+	LinkedList<int> *intlist = new LinkedList<int>();
 
+	intlist->insert(5);
+	intlist->insert(2);
+	intlist->insert(33);
+	intlist->insert(991);
+	intlist->insert(3);
+
+	intlist->display();
+	std::cout << "\n";
+	intlist->reverse();
+	return 0;
 }

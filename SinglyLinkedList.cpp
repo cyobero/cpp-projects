@@ -15,9 +15,11 @@ class LinkedList {
 		Node<T> *head;
 
 		void insert(T newData) {
-			Node<T>* newNode = new Node<T>(newData);
+			Node<T>* newNode = new Node<T>(newData);		
 			newNode->data = newData;
+			
 			newNode->next = head;
+		
 			head = newNode;
 		}
 
