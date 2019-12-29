@@ -35,6 +35,20 @@ class LinkedList
 			}
 		}
 
+		Node<T>* removeHead()
+		{
+			Node<T>* oldhead = head;
+			head = head->next;
+			return oldhead;
+		}
+
+		Node<T>* removeTail()
+		{
+			Node<T>* oldtail = tail;
+			tail = tail->previous;
+			return oldtail;
+		}
+
 		void display()
 		{
 			Node<T> *ptr;
@@ -44,6 +58,35 @@ class LinkedList
 				std::cout << ptr->data << " ";
 				ptr = ptr->next;
 			}
+		}
+
+		void insertAfter(int targetKey, int newKey, T newData)
+		{
+			// search for target key. make pointer and let it keep
+			// searching the its next node until (a) it reaches the tail, and/or
+			// (b) the target key has been found.
+			// 			if target key found:
+			
+			
+			// pointer node which will iterate through the linked list	
+			Node<T> * ptr = head;
+			while (ptr->next != nullptr)
+			{
+				ptr = ptr->next;
+				if (ptr->key == targetKey)
+				{
+					// target key found
+					std::cout << "target key " << targetKey << "found with value: " << newData << std::endl;
+					Node<T>* newNode = new Node<T>(newKey, newData);
+					ptr->next = newNode;
+				 	ptr->next->previous = newNode;	
+					newNode->previous = ptr;
+					ptr = newNode;
+					return;
+				} 			
+			}
+			// no matchking key was found
+			std::cout << "No matching key found." << std::endl;
 		}
 
 		void reverse()
@@ -79,6 +122,12 @@ int main() {
 	std::cout << "\n";
 	charlist->display();
 	std::cout << "\n";
+	charlist->removeTail();
 	charlist->reverse();
+
+	charlist->insertAfter(1, 4, 'y');
+	intlist->insertAfter(3, 4, 4);
+	intlist->insertAfter(19, 21, 21);
+
 	return 0;
 }
